@@ -22,12 +22,23 @@ public class User {
 	@Column
 	private String name;
 	@Column
-	private Long age;
+	private Integer age;
 	@Column
 	private String email;
 	
 	@ManyToMany
 	private Set<Role> roles;
+	
+	public User() {
+		super();
+	}
+
+	public User(String name, Integer age, String email) {
+		super();
+		this.name = name;
+		this.age = age;
+		this.email = email;
+	}
 	
 	public Long getId() {
 		return id;
@@ -41,10 +52,10 @@ public class User {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Long getAge() {
+	public Integer getAge() {
 		return age;
 	}
-	public void setAge(Long age) {
+	public void setAge(Integer age) {
 		this.age = age;
 	}
 	public String getEmail() {
