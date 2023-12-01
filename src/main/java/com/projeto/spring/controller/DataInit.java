@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.projeto.spring.entity.User;
+import com.projeto.spring.entity.Person;
 import com.projeto.spring.repository.UserRepository;
 
 @RestController
@@ -27,26 +27,28 @@ public class DataInit implements ApplicationListener<ContextRefreshedEvent>{
 	
 	@GetMapping
 	@ResponseStatus(code = HttpStatus.OK)
-	public List<User> findUsers() {
+	public List<Person> findAllPeople() {
 		return dataSource.findAll();
 	}
 	
 	@GetMapping("/{id}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public Optional<User> getOneUser(@PathVariable("id") Long identification) {
+	public Optional<Person> getOneUser(@PathVariable("id") Long identification) {
 		return dataSource.findById(identification);
 	}
 	
-	public void newUsers(String name, Integer age, String email) {
-		User newUsers = new User(name, age, email);
+	public void newPerson(String name, String email, String city, String country) {
+		Person newUsers = new Person(name, email, city, country);
 		dataSource.save(newUsers);
 	}
 
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		
-		if ( !findUsers().isEmpty() ) {
-			newUsers("new user", 100, "new.user@gmail.com");
+		if ( findAllPeople().isEmpty() ) {
+			newPerson("harryson sousa", "harrysousa245@gmail.com", "osasco", "brazil");
+		} else if ( !findAllPeople().isEmpty() ) {
+			newPerson("new person", "new.person@gmail.com", "orlando", "usa");
 		}
 	}
 }
