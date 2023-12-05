@@ -49,11 +49,10 @@ public class DataInit implements ApplicationListener<ContextRefreshedEvent>{
 		dataSource.save(person);
 	}
 	
-	
 	// delete one person
 	@GetMapping("/delete/{id}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public void deletePerson(@PathVariable("id") Long identification) {
+	public void deleteOnePerson(@PathVariable("id") Long identification) {
 		dataSource.deleteById(identification);
 	}
 	
@@ -66,8 +65,24 @@ public class DataInit implements ApplicationListener<ContextRefreshedEvent>{
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		
+		// teste dos métodos mágicos
+		Person person1 = dataSource.findByName("harryson renan");
+		Person person2 = dataSource.findByEmail("camila.santos@gmail.com");
+		Person person3 = dataSource.findByCountry("it");
+		
+		if (person1.getName().equals("harryson renan") || 
+				person2.getEmail().equals("camila.santos@gmail.com") || 
+				person3.getCountry().equals("italy")) {
+			System.out.println(person1.toString());
+			System.out.println(person2.toString());
+			System.out.println(person3.toString());
+			
+		}
+		
 		if ( findAllPeople().isEmpty() ) {
 			newPerson("harryson sousa", "harrysousa245@gmail.com", "osasco", "brazil");
+			newPerson("camila santos", "camila.santos@gmail.com", "são paulo", "brazil");
+			newPerson("ana cléa", "ana.clea@gmail.com", "osasco", "brazil");
 		} else if ( !findAllPeople().isEmpty() ) {
 			newPerson("new person", "new.person@gmail.com", "orlando", "usa");
 		}
