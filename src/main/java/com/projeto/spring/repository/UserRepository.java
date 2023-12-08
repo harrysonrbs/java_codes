@@ -7,10 +7,12 @@ import com.projeto.spring.entity.Person;
 
 public interface UserRepository extends JpaRepository<Person, Long> {
 
-	// métodos mágicos
-	Person findByName(String name);
+	// métodos mágicos sem JPQL
+	Person name(String name);
 	Person findByEmail(String email);
+	Person id(int id);
 	
+	// métodos mágicos com JPQL
 	@Query("select u from Person u where u.country like %?1%")
 	Person findByCountry(String country);
 	

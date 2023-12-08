@@ -18,9 +18,9 @@ import com.projeto.spring.repository.UserRepository;
 @RestController
 @RequestMapping(value = "api/users")
 public class DataInit implements ApplicationListener<ContextRefreshedEvent>{
-		
-	private final UserRepository dataSource;
 	
+	// injeção de dependência via construtor
+	private final UserRepository dataSource;
 	public DataInit(UserRepository dataSource) {
 		this.dataSource = dataSource;
 	}
@@ -42,18 +42,21 @@ public class DataInit implements ApplicationListener<ContextRefreshedEvent>{
 	// edit email one person
 	@GetMapping("/edit/{id}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public void getEditOnePerson(@PathVariable("id") Long identification) {
+	public String getEditOnePerson(@PathVariable("id") Long identification) {
 		Person person = dataSource.getReferenceById(identification);
 		person.setName("harryson renan");
-		person.setEmail("harrysousa247@gmail.com");
+		person.setEmail("harrysousa248@gmail.com");
 		dataSource.save(person);
+		return person.toString();
 	}
 	
 	// delete one person
 	@GetMapping("/delete/{id}")
 	@ResponseStatus(code = HttpStatus.OK)
-	public void deleteOnePerson(@PathVariable("id") Long identification) {
+	public String deleteOnePerson(@PathVariable("id") Long identification) {
+		Person person = dataSource.getReferenceById(identification);
 		dataSource.deleteById(identification);
+		return person.toString();
 	}
 	
 	// save new person
@@ -66,9 +69,10 @@ public class DataInit implements ApplicationListener<ContextRefreshedEvent>{
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		
 		// teste dos métodos mágicos
-		Person person1 = dataSource.findByName("harryson renan");
-		Person person2 = dataSource.findByEmail("camila.santos@gmail.com");
-		Person person3 = dataSource.findByCountry("it");
+		Person person1 = dataSource.name("harryson renan");
+		Person person2 = dataSource.id(3);
+		Person person3 = dataSource.findByEmail("camila.santos@gmail.com");
+		Person person4 = dataSource.findByCountry("it");
 		
 		if (person1.getName().equals("harryson renan") || 
 				person2.getEmail().equals("camila.santos@gmail.com") || 
