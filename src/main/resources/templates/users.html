@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<meta charset="UTF-8">
+		<title>Testing my project</title>
+	</head>
+	
+	<body>
+		
+		<table>
+			
+			<tr>
+				<th>Id</th>
+				<th>City</th>
+				<th>Country</th>
+				<th>Email</th>
+				<th>Name</th>	
+			</tr>
+			
+			<tr th:each="users : ${userList}">
+				<td th:text="${users.id}"></td>
+				<td th:text="${users.city}"></td>
+				<td th:text="${users.country}"></td>
+				<td th:text="${users.email}"></td>
+				<td th:text="${users.name}"></td>
+			</tr>
+			
+		</table>
+		
+	</body>
+	
+</html>
